@@ -29,3 +29,39 @@ SELECT * FROM employees WHERE employeeNumber NOT IN (SELECT DISTINCT reportsTo F
 	SELECT * FROM payments WHERE paymentDate BETWEEN "2004-01-01" AND "2004-12-31" ORDER BY amount DESC LIMIT 10;
 10.-SELECCIONE LOS 10 PAGOS MAS BAJOS DE 2004
 	SELECT * FROM payments WHERE paymentDate BETWEEN "2004-01-01" AND "2004-12-31" ORDER BY amount ASC LIMIT 10;
+
+11.-SELECCIONAR TODOS LOS EMPLEADOS DE LAS OFICIANAS DE USA
+
+	SELECT employees.*,office.country
+	FROM employees
+	JOIN office ON employees.officeCode=offices.officeCode
+	WHERE offices.country='USA';
+
+12.-SELECCIONAR EL MONTO EN VENTAS DE LOS PRODUCTOS DE LA LINEA "Motorcycles"
+
+	SELECT SUM(payments.amount) AS total_ventas
+	FROM payments
+	JOIN customers ON payments.customerNumber=customers.customerNumber
+	JOIN orders ON customers.customerNumber=orders.customerNumber
+	JOIN orderdetails ON orders.orderNumber=orderdetails.orderNumber
+	JOIN products ON orderdetails.productCode=products.productCode
+	JOIN productlines ON products.productLine=productlines.productLine
+	WHERE productlines.productLine='Motorcycles';
+
+13.-Seleccionar todos los productos de la linea 'TRAINS'
+
+	SELECT products.* 
+	FROM productlines JOIN products ON productlines.productLine = products.productLine 
+	WHERE productlines.productLine='TRAINS';
+
+14.-Seleccionar todos los pagos realizados por 'Mini wheels Co.'
+
+	SELECT payments.*, customers.customerName FROM customers 
+	JOIN payments ON customers.customerNumber = payments.customerNumber 
+	WHERE customers.customerName = 'Mini Wheels Co.';
+
+15.-Seleccionar todos los pagos realizados por clientes de 'Spain'
+
+	SELECT payments.*, customers.country FROM customers 
+	JOIN payments ON customers.customerNumber = payments.customerNumber 
+	WHERE customers.country = 'Spain';
